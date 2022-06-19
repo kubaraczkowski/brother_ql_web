@@ -10,9 +10,9 @@
     "PRINTER": "file:///dev/usb/lp1"
   },
   "LABEL": {
-    "DEFAULT_SIZE": "62",
-    "DEFAULT_ORIENTATION": "standard",
-    "DEFAULT_FONT_SIZE": 70,
+    "DEFAULT_SIZE": "12",
+    "DEFAULT_ORIENTATION": "rotated",
+    "DEFAULT_FONT_SIZE": 50,
     "DEFAULT_FONTS": [
       {"family": "Minion Pro",      "style": "Semibold"},
       {"family": "Linux Libertine", "style": "Regular"},
@@ -21,7 +21,7 @@
   },
   "WEBSITE": {
     "HTML_TITLE": "Label Designer",
-    "PAGE_TITLE": "Brother QL Label Designer",
-    "PAGE_HEADLINE": "Design your label and print it…"
+    "PAGE_TITLE": "Spectricity Label Designer",
+    "PAGE_HEADLINE": "Design your label and print it on the small black label printer"
   }
 }

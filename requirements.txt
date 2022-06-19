@@ -1,3 +1,4 @@
-brother_ql
 bottle
 jinja2
+git+https://github.com/masatomizuta/py-brotherlabel@master#egg=py-brotherlabel
+

@@ -1,0 +1,17 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ql_web",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/brother_ql_web.py",
+            "args": ["--loglevel", "DEBUG", "tcp://10.0.250.92"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

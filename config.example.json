@@ -6,17 +6,15 @@
     "ADDITIONAL_FONT_FOLDER": false
   },
   "PRINTER": {
-    "MODEL": "QL-500",
-    "PRINTER": "file:///dev/usb/lp1"
+    "MODEL": "PT-P900W",
+    "PRINTER": "tcp://10.0.250.92"
   },
   "LABEL": {
     "DEFAULT_SIZE": "12",
     "DEFAULT_ORIENTATION": "rotated",
-    "DEFAULT_FONT_SIZE": 50,
+    "DEFAULT_FONT_SIZE": 100,
     "DEFAULT_FONTS": [
-      {"family": "Minion Pro",      "style": "Semibold"},
-      {"family": "Linux Libertine", "style": "Regular"},
-      {"family": "DejaVu Serif",    "style": "Book"}
+      {"family": "DejaVu Sans",    "style": "Book"}
     ]
   },
   "WEBSITE": {

@@ -13,6 +13,27 @@
     <div class="col-md-4">
       <fieldset class="form-group">
         <div class="panel-group" id="accordion">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse0">
+                <span class="glyphicon glyphicon-print" aria-hidden="false"></span> Printer location</a>
+              </h4>
+            </div>
+            <div id="collapse0" class="panel-collapse collapse">
+              <div class="chooser panel-body">
+              <label for="printer" style="margin-top: 10px; margin-bottom: 0">Printer location:</label>
+              <div class="radio" style="margin-top: 5px;">
+                <label><input type="radio" onchange="preview()" name="location" value="Office" checked>Office</label>
+              </div>
+              <div class="radio">
+                <label><input type="radio" onchange="preview()" name="location" value="Lab" >Lab</label>
+              </div>
+              </div>
+              </div>
+          </div>
+
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
@@ -20,6 +41,7 @@
                 <span class="glyphicon glyphicon-file" aria-hidden="true"></span> Label Size</a>
               </h4>
             </div>
+
             <div id="collapse1" class="panel-collapse collapse">
               <div class="chooser panel-body">
               <label for="labelSize" style="display: none">Label Size:</label>
@@ -31,6 +53,7 @@
                     </option>
                 {% endfor %}
               </select>
+
               <label for="orientation" style="margin-top: 10px; margin-bottom: 0">Label Orientation:</label>
               <div class="radio" style="margin-top: 5px;">
                 <label><input type="radio" onchange="preview()" name="orientation" value="standard" {% if default_orientation == 'standard' %}checked{% endif %}>Standard</label>
@@ -38,9 +61,12 @@
               <div class="radio">
                 <label><input type="radio" onchange="preview()" name="orientation" value="rotated" {% if default_orientation == 'rotated' %}checked{% endif %}>Rotated</label>
               </div>
+
               </div> <!-- class="chooser panel-body" -->
+
             </div>
           </div>
+
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
@@ -144,7 +170,7 @@ function formData() {
   //var text = $('#labelText').val().replace(/\n/g, "%0A");
   var text = $('#labelText').val();
   if (text == '') text = ' ';
-  return {
+  d = {
     text:        text,
     font_family: $('#fontFamily option:selected').text(),
     font_size:   $('#fontSize').val(),
@@ -154,8 +180,10 @@ function formData() {
     margin_top:    $('#marginTop').val(),
     margin_bottom: $('#marginBottom').val(),
     margin_left:   $('#marginLeft').val(),
-    margin_right:  $('#marginRight').val()
+    margin_right:  $('#marginRight').val(),
+    location:     $('input[name=location]:checked').val()
   }
+  return d
 }
 
 function preview() {

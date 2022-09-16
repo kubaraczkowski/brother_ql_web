@@ -1,0 +1,1 @@
+web: gunicorn --bind :$PORT --workers 1 --threads 1 --timeout 0 brother_ql_web:app

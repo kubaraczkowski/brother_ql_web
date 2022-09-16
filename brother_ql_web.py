@@ -8,7 +8,7 @@ This is a web service to print labels on Brother QL label printers.
 import sys, logging, random, json, argparse
 from io import BytesIO
 
-from bottle import run, route, get, post, response, request, jinja2_view as view, static_file, redirect
+from bottle import default_app, run, route, get, post, response, request, jinja2_view as view, static_file, redirect
 from PIL import Image, ImageDraw, ImageFont
 
 # from brother_ql.devicedependent import models, label_type_specs, label_sizes
@@ -17,6 +17,11 @@ from PIL import Image, ImageDraw, ImageFont
 # from brother_ql.backends import backend_factory, guess_backend
 
 import brotherlabel
+
+IPs = {
+    "Office": "10.0.250.92",
+    "Lab": "10.0.250.93",
+}
 
 
 from font_helpers import get_fonts
@@ -32,6 +37,11 @@ try:
 except FileNotFoundError as e:
     with open('config.example.json', encoding='utf-8') as fh:
         CONFIG = json.load(fh)
+
+app = default_app()
+FONTS = get_fonts()
+if CONFIG['SERVER']['ADDITIONAL_FONT_FOLDER']:
+    FONTS.update(get_fonts(CONFIG['SERVER']['ADDITIONAL_FONT_FOLDER']))
 
 
 @route('/')
@@ -74,8 +84,9 @@ def get_label_context(request):
       'margin_bottom': float(d.get('margin_bottom', 45))/100.,
       'margin_left':   float(d.get('margin_left',   35))/100.,
       'margin_right':  float(d.get('margin_right',  35))/100.,
+      'location':       d.get("location"),
     }
-    context['margin_top']    = int(context['font_size']*context['margin_top'])
+   context['margin_top']    = int(context['font_size']*context['margin_top'])
     context['margin_bottom'] = int(context['font_size']*context['margin_bottom'])
     context['margin_left']   = int(context['font_size']*context['margin_left'])
     context['margin_right']  = int(context['font_size']*context['margin_right'])
@@ -200,7 +211,10 @@ def print_text():
 
     # if context['kind'] == ENDLESS_LABEL:
     rotate = 0 if context['orientation'] == 'standard' else 90
-    url = CONFIG['PRINTER']['PRINTER']
+    # url = CONFIG['PRINTER']['PRINTER']
+
+    url = IPs[context['location']]
+
     backend = brotherlabel.NetworkBackend(url) 
     printer = brotherlabel.PTPrinter(backend)
     printer.quality = brotherlabel.Quality.high_quality
@@ -276,9 +290,6 @@ def main():
     # if CONFIG['LABEL']['DEFAULT_SIZE'] not in label_sizes:
     #     parser.error("Invalid --default-label-size. Please choose on of the following:\n:" + " ".join(label_sizes))
 
-    FONTS = get_fonts()
-    if ADDITIONAL_FONT_FOLDER:
-        FONTS.update(get_fonts(ADDITIONAL_FONT_FOLDER))
 
     if not FONTS:
         sys.stderr.write("Not a single font was found on your system. Please install some or use the \"--font-folder\" argument.\n")
@@ -298,7 +309,7 @@ def main():
         CONFIG['LABEL']['DEFAULT_FONTS'] = {'family': family, 'style': style}
         sys.stderr.write('The default font is now set to: {family} ({style})\n'.format(**CONFIG['LABEL']['DEFAULT_FONTS']))
 
-    run(host=CONFIG['SERVER']['HOST'], port=PORT, debug=DEBUG)
+    run(app=app, host=CONFIG['SERVER']['HOST'], port=PORT, debug=DEBUG)
 
 if __name__ == "__main__":
     main()

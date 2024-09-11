@@ -13,11 +13,11 @@ RUN apk add --update --no-cache \
     py3-pip \
     ttf-dejavu
 
-RUN ln -s /usr/bin/python3 /usr/bin/python
+#RUN ln -s /usr/bin/python3 /usr/bin/python
 COPY . ./brother_ql_web
 WORKDIR ./brother_ql_web
 RUN rm -r .git
-RUN /usr/bin/pip3 install --no-cache-dir -r requirements.txt
+RUN /usr/bin/pip3 install --no-cache-dir -r requirements.txt  --break-system-packages
 
 RUN apk del .build-deps
 

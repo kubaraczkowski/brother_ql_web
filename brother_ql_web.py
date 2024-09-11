@@ -19,7 +19,7 @@ from PIL import Image, ImageDraw, ImageFont
 import brotherlabel
 
 IPs = {
-    "Office": "10.0.250.92",
+    "Office": "10.0.250.94",
     "Lab": "10.0.250.93",
 }
 

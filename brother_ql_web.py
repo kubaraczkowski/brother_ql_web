@@ -132,15 +132,16 @@ def create_label_im(text, **kwargs):
         if line == '': line = ' '
         lines.append(line)
     text = '\n'.join(lines)
-    linesize = im_font.getsize(text)
-    textsize = draw.multiline_textsize(text, font=im_font)
+    linesize = im_font.getbbox(text)
+    textsize = draw.multiline_textbbox((0,0), text=text, font=im_font)
+    print(textsize)
     width, height = kwargs['width'], kwargs['height']
     if kwargs['orientation'] == 'standard':
     #     if label_type in (ENDLESS_LABEL,):
-        height = textsize[1] + kwargs['margin_top'] + kwargs['margin_bottom']
+        height = textsize[3] + kwargs['margin_top'] + kwargs['margin_bottom']
     elif kwargs['orientation'] == 'rotated':
     #     if label_type in (ENDLESS_LABEL,):
-        width = textsize[0] + kwargs['margin_left'] + kwargs['margin_right']
+        width = textsize[2] + kwargs['margin_left'] + kwargs['margin_right']
     im = Image.new('RGB', (width, height), 'white')
     draw = ImageDraw.Draw(im)
     # if kwargs['orientation'] == 'standard':
@@ -149,12 +150,12 @@ def create_label_im(text, **kwargs):
         #     vertical_offset += (kwargs['margin_top'] - kwargs['margin_bottom'])//2
         # else:
     vertical_offset = kwargs['margin_top']
-    horizontal_offset = max((width - textsize[0])//2, 0)
+    horizontal_offset = max((width - textsize[2])//2, 0)
     # elif kwargs['orientation'] == 'rotated':
-    #     vertical_offset  = (height - textsize[1])//2
+    #     vertical_offset  = (height - textsize[3])//2
     #     vertical_offset += (kwargs['margin_top'] - kwargs['margin_bottom'])//2
     #     if label_type in (DIE_CUT_LABEL, ROUND_DIE_CUT_LABEL):
-    #         horizontal_offset = max((width - textsize[0])//2, 0)
+    #         horizontal_offset = max((width - textsize[2])//2, 0)
     #     else:
     #         horizontal_offset = kwargs['margin_left']
     offset = horizontal_offset, vertical_offset
